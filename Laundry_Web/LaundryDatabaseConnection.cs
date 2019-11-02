@@ -73,7 +73,8 @@ namespace Laundry_Web
                     sql += "time_set = " + timeset.ToString();
                     sql += "WHERE machine_num = " + machinenumber.ToString();
 
-                    SqlCommand command = new SqlCommand(sql, connection);
+                    using SqlCommand command = new SqlCommand(sql, connection);
+                    command.ExecuteNonQuery();
                 }
             }
             catch (SqlException e)
