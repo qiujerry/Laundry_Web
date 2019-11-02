@@ -6,7 +6,7 @@ namespace Laundry_Web
     {
         public int MachineNumber { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         public int TimeSet { get; set; }
 
