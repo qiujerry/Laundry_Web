@@ -24,7 +24,7 @@ namespace Laundry_Web.Controllers
         {
             var rng = new Random();
             LaundryDatabaseConnection x = new LaundryDatabaseConnection();
-            ArrayList data = x.laundryDatabaseConnection();
+            ArrayList data = x.laundryDatabaseDownload();
             return Enumerable.Range(1, 15).Select(index => new LaundryList
             {
                 MachineNumber = index,

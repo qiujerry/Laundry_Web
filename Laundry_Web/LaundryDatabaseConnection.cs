@@ -7,7 +7,7 @@ namespace Laundry_Web
 {
     public class LaundryDatabaseConnection
     {
-        public ArrayList laundryDatabaseConnection()
+        public ArrayList laundryDatabaseDownload()
         {
             ArrayList x = new ArrayList();
             try
