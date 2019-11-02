@@ -46,6 +46,7 @@ export class LaundryList extends Component {
             <table className='table table-striped' aria-labelledby="tabelLabel">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Washer ID</th>
                         <th>Time Remaining</th>
                         <th>Status</th>
@@ -55,11 +56,10 @@ export class LaundryList extends Component {
                 <tbody>
                     {laundryData.map(laundryData =>
                         <tr key={laundryData.machineNumber}>
+                            <td><button>Reserve</button></td>
                             <td>{laundryData.machineNumber}</td>
                             <td>{LaundryList.calcRemainingTime(laundryData.date, laundryData.timeSet, laundryData.available)}</td>
                             <td>{laundryData.available}</td>
-
-
                         </tr>
                     )}
                 </tbody>
@@ -74,8 +74,8 @@ export class LaundryList extends Component {
 
         return (
             <div>
-                <h1 id="tabelLabel" >Weather forecast</h1>
-                <p>This component demonstrates fetching data from the server.</p>
+                <h1 id="tabelLabel" >Laundry Machines</h1>
+                <p>This is a list of all the available machines in your location</p>
                 {contents}
             </div>
         );

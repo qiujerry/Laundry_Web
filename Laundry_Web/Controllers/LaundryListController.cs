@@ -33,5 +33,7 @@ namespace Laundry_Web.Controllers
                 Available = (data[index - 1] as LaundryList).Available
             }).ToArray();
         }
+
+
     }
 }
