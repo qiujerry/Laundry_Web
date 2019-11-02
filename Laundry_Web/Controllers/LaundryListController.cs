@@ -11,11 +11,6 @@ namespace Laundry_Web.Controllers
     [Route("[controller]")]
     public class LaundryListController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<LaundryListController> _logger;
 
         public LaundryListController(ILogger<LaundryListController> logger)
@@ -27,13 +22,11 @@ namespace Laundry_Web.Controllers
         public IEnumerable<LaundryList> Get()
         {
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new LaundryList
+            return Enumerable.Range(1, 15).Select(index => new LaundryList
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                MachineNumber = index,
+                Date = DateTime.Now.AddMinutes(rng.Next(1, 30))
+            }).ToArray();
         }
     }
 }
