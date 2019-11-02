@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -6,8 +7,9 @@ namespace Laundry_Web
 {
     public class LaundryDatabaseConnection
     {
-        public void laundryDatabaseConnection()
+        public ArrayList laundryDatabaseConnection()
         {
+            ArrayList x = new ArrayList();
             try
             {
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
@@ -19,9 +21,6 @@ namespace Laundry_Web
 
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
                 {
-                    Console.WriteLine("\nQuery data example:");
-                    Console.WriteLine("=========================================\n");
-
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
 
@@ -34,12 +33,13 @@ namespace Laundry_Web
                         {
                             while (reader.Read())
                             {
-                                Console.WriteLine("{0} {1} {2} {3}",
-                                                                    reader.GetInt32(0),
-                                                                    reader.GetString(1),
-                                                                    reader.GetString(2),
-                                                                    reader.GetInt32(3)
-                                                                    );
+                                x.Add(new LaundryList
+                                {
+                                    MachineNumber = reader.GetInt32(0),
+                                    Date = reader.GetString(1),
+                                    Available = reader.GetString(2),
+                                    TimeSet = reader.GetInt32(3)
+                                }) ;
                             }
                         }
                     }
@@ -49,7 +49,7 @@ namespace Laundry_Web
             {
                 Console.WriteLine(e.ToString());
             }
-            Console.ReadLine();
+            return x;
         }
     }
 }

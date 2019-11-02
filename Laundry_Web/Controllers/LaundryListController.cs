@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,12 +23,14 @@ namespace Laundry_Web.Controllers
         public IEnumerable<LaundryList> Get()
         {
             var rng = new Random();
+            LaundryDatabaseConnection x = new LaundryDatabaseConnection();
+            ArrayList data = x.laundryDatabaseConnection();
             return Enumerable.Range(1, 15).Select(index => new LaundryList
             {
                 MachineNumber = index,
-                Date = DateTime.Now.AddMinutes(rng.Next(-40, 0)),
-                TimeSet = rng.Next(10, 60),
-                Available = "closed"
+                Date = (data[index - 1] as LaundryList).Date,
+                TimeSet = (data[index - 1] as LaundryList).TimeSet,
+                Available = (data[index - 1] as LaundryList).Available
             }).ToArray();
         }
     }
