@@ -8,5 +8,8 @@ namespace Laundry_Web
 
         public DateTime Date { get; set; }
 
+        public int TimeSet { get; set; }
+
+        public string Available { get; set; }
     }
 }
