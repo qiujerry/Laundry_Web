@@ -5,11 +5,11 @@ export class LaundryList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { forecasts: [], loading: true };
+        this.state = { machines: [], loading: true };
     }
 
     componentDidMount() {
-        this.populateWeatherData();
+        this.populateLaundryData();
 
     }
 
@@ -41,7 +41,7 @@ export class LaundryList extends Component {
 
     }
 
-    static renderForecastsTable(laundryData) {
+    static renderLaundryDataTable(laundryData) {
         return (
             <table className='table table-striped' aria-labelledby="tabelLabel">
                 <thead>
@@ -70,7 +70,7 @@ export class LaundryList extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : LaundryList.renderForecastsTable(this.state.forecasts);
+            : LaundryList.renderLaundryDataTable(this.state.machines);
 
         return (
             <div>
@@ -81,10 +81,10 @@ export class LaundryList extends Component {
         );
     }
 
-    async populateWeatherData() {
+    async populateLaundryData() {
         const response = await fetch('laundrylist');
         const data = await response.json();
-        this.setState({ forecasts: data, loading: false });
+        this.setState({ machines: data, loading: false });
     }
 
 }
