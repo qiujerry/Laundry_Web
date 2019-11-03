@@ -68,10 +68,10 @@ namespace Laundry_Web
                     connection.Open();
 
                     String sql = "UPDATE [dbo].[laundry_status] SET ";
-                    sql += "start_time = " + DateTime.Now.ToString() + ", ";
-                    sql += "available = " + available + ", ";
+                    sql += "start_time = '" + DateTime.Now.ToString() + "', ";
+                    sql += "available = '" + available + "', ";
                     sql += "time_set = " + timeset.ToString();
-                    sql += "WHERE machine_num = " + machinenumber.ToString();
+                    sql += " WHERE machine_num = " + machinenumber.ToString() + ";";
 
                     using SqlCommand command = new SqlCommand(sql, connection);
                     command.ExecuteNonQuery();

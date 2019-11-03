@@ -11,7 +11,7 @@ export default class App extends Component {
   render () {
     return (
       <Layout>
-        <Route path='/laundry-list' component={LaundryList} />
+        <Route path='/' component={LaundryList} />
       </Layout>
     );
   }

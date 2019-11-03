@@ -10,7 +10,7 @@ export class LaundryList extends Component {
 
     componentDidMount() {
         this.populateLaundryData();
-
+        this.storeLaundryData(1, 40, "open");
     }
 
     static calcRemainingTime(strData, mTimer, mStatus) {
@@ -85,6 +85,19 @@ export class LaundryList extends Component {
         const response = await fetch('laundrylist');
         const data = await response.json();
         this.setState({ machines: data, loading: false });
+    }
+
+    async storeLaundryData(machinenum, timeset, available) {
+        fetch('laundryList', {
+            method: 'POST',
+            headers: new Headers(),
+            body: JSON.stringify(
+                {
+                    'machinenum': machinenum,
+                    'timeset': timeset,
+                    'available': available
+                })
+        });
     }
 
 }
