@@ -44,7 +44,6 @@ namespace Laundry_Web.Controllers
             LaundryDatabaseConnection x = new LaundryDatabaseConnection();
             x.laundryDatabaseUpload(list.MachineNumber, list.TimeSet, list.Available);
 
-            //return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
             return CreatedAtAction(nameof(list), new {}, list);
 
         }

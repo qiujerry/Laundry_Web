@@ -10,10 +10,29 @@ export class LaundryList extends Component {
 
     componentDidMount() {
         this.populateLaundryData();
-        this.storeLaundryData(2, 40, "closed");
     }
 
-    static calcRemainingTime(strData, mTimer, mStatus) {
+    static handleClick(mnum) {
+        LaundryList.storeLaundryData(mnum, 30, "closed");
+        window.location.reload();
+    }
+
+    static storeLaundryData(machinenum, timeset, available) {
+        fetch('laundrylist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "MachineNumber": machinenum,
+                "Date": "",
+                "TimeSet": timeset,
+                "Available": available
+            })
+        });
+    }
+
+    static calcRemainingTime(mnum, strData, mTimer, mStatus) {
 
         var date1 = new Date(strData);
 
@@ -35,6 +54,7 @@ export class LaundryList extends Component {
 
         if (timeRemaining < 0 || mStatus.localeCompare("open") === 0) {
             timeRemaining = 0;
+            this.storeLaundryData(mnum, 0, "open");
         }
 
         return timeRemaining;
@@ -50,18 +70,22 @@ export class LaundryList extends Component {
                         <th>Washer ID</th>
                         <th>Time Remaining</th>
                         <th>Status</th>
-
                     </tr>
                 </thead>
                 <tbody>
-                    {laundryData.map(laundryData =>
-                        <tr key={laundryData.machineNumber}>
-                            <td><button>Reserve</button></td>
-                            <td>{laundryData.machineNumber}</td>
-                            <td>{LaundryList.calcRemainingTime(laundryData.date, laundryData.timeSet, laundryData.available)}</td>
-                            <td>{laundryData.available}</td>
-                        </tr>
-                    )}
+                    {laundryData.map(function (laundryData) {
+                        return (
+                            <tr key={laundryData.machineNumber}>
+                                <td><button id={laundryData.machineNumber}
+                                    onClick={LaundryList.handleClick.bind(this, laundryData.machineNumber)}>
+                                    Reserve</button>
+                                </td>
+                                <td>{laundryData.machineNumber}</td>
+                                <td>{LaundryList.calcRemainingTime(laundryData.machineNumber, laundryData.date, laundryData.timeSet, laundryData.available)}</td>
+                                <td>{laundryData.available}</td>
+                            </tr>
+                        );
+                    }, this)}
                 </tbody>
             </table>
         );
@@ -84,19 +108,8 @@ export class LaundryList extends Component {
     async populateLaundryData() {
         const response = await fetch('laundrylist');
         const data = await response.json();
-        this.setState({ machines: data, loading: false });
+        this.setState({ machines: data, loading: false});
     }
 
-    async storeLaundryData(machinenum, timeset, available) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'laundrylist');
-        xhr.send(JSON.stringify({
-            "MachineNumber": machinenum,
-            "Date": "",
-            "TimeSet": timeset,
-            "Available": available
-        }
-        ));
-    }
 
 }
