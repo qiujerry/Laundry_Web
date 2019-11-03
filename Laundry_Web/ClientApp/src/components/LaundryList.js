@@ -108,6 +108,8 @@ export class LaundryList extends Component {
     async populateLaundryData() {
         const response = await fetch('laundrylist');
         const data = await response.json();
+        
+        
         this.setState({ machines: data, loading: false});
     }
 
