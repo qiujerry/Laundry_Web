@@ -10,7 +10,7 @@ export class LaundryList extends Component {
 
     componentDidMount() {
         this.populateLaundryData();
-        this.storeLaundryData(1, 40, "open");
+        this.storeLaundryData(2, 40, "closed");
     }
 
     static calcRemainingTime(strData, mTimer, mStatus) {
@@ -33,7 +33,7 @@ export class LaundryList extends Component {
 
         var timeRemaining = mTimer - timePassed;
 
-        if (timeRemaining < 0 || mStatus.localeCompare("open") == 0) {
+        if (timeRemaining < 0 || mStatus.localeCompare("open") === 0) {
             timeRemaining = 0;
         }
 
@@ -88,16 +88,15 @@ export class LaundryList extends Component {
     }
 
     async storeLaundryData(machinenum, timeset, available) {
-        fetch('laundryList', {
-            method: 'POST',
-            headers: new Headers(),
-            body: JSON.stringify(
-                {
-                    'machinenum': machinenum,
-                    'timeset': timeset,
-                    'available': available
-                })
-        });
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'laundrylist');
+        xhr.send(JSON.stringify({
+            "MachineNumber": machinenum,
+            "Date": "",
+            "TimeSet": timeset,
+            "Available": available
+        }
+        ));
     }
 
 }

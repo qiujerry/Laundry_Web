@@ -38,29 +38,15 @@ namespace Laundry_Web.Controllers
         }
 
         [HttpPost]
-        public void Post(JObject json)
+        public async Task<ActionResult<LaundryList>> Post(LaundryList list)
         {
-            int i = 0;
-            int m = 0, t = 0;
-            string a = "";
-            foreach (JProperty property in json.Properties())
-            {
-                if (i == 0)
-                {
-                    m = property.Value.ToObject<int>();
-                }
-                else if (i == 1)
-                {
-                    t = property.Value.ToObject<int>();
-                }
-                else
-                {
-                    a = property.Value.ToObject<string>();
-                }
-                i++;
-            }
+
             LaundryDatabaseConnection x = new LaundryDatabaseConnection();
-            x.laundryDatabaseUpload(m, t, a);
+            x.laundryDatabaseUpload(list.MachineNumber, list.TimeSet, list.Available);
+
+            //return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+            return CreatedAtAction(nameof(list), new {}, list);
+
         }
 
 
